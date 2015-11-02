@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Popover Sample</title>
+	<meta charset="utf-8" />
+
+	<link media="all" rel="stylesheet" type="text/css" href="vendor/bower/fontawesome/css/font-awesome.css" />
+	<link media="all" rel="stylesheet" type="text/css" href="styles/popover.css" />
+	<style type="text/css" media="all">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.wrapper {
+			width: 850px;
+			margin: 100px auto 80px;
+		}
+
+		.target {
+			background: #ff99cc;
+			width: 100px;
+			height: 100px;
+			float: left;
+			margin: 20px;
+		}
+	</style>
+
+	<script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
+	<script type="text/javascript" src="lib/popover.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".target").on("click", function() {
+				var $this = $(this),
+					pos = [$this.data("arg0"), $this.data("arg1")].join("-"),
+					content = "";
+
+				for (var i = 0; i < 10; i++) {
+					content += "hello, this is a simple popover. have a nice day!<br />";
+				}
+
+				var opts = {
+					pointTo: $this,
+					content: content,
+          autohide: true,
+					align: $("#condition-align").val(),
+                    // offset: {
+                    //     y: 20,
+                    //     x: 20
+                    // },
+					verticalAlign: $("#condition-vertical-align").val()
+				};
+
+				if (pos !== "-") {
+					opts.position = pos;
+				}
+
+				simple.popover(opts);
+			});
+		});
+	</script>
+
+</head>
+<body>
+	<div class="wrapper">
+		<div class="condition">
+			Align
+			<select id="condition-align">
+				<option value="left">left</option>
+				<option value="center" selected>center</option>
+				<option value="right">right</option>
+			</select>
+			Vertical Align
+			<select id="condition-vertical-align">
+				<option value="top">top</option>
+				<option value="middle" selected>middle</option>
+				<option value="bottom">bottom</option>
+			</select>
+		</div>
+
+
+
+		<div class="target" data-arg0="top" data-arg1="left">top-left</div>
+		<div class="target" data-arg0="top" data-arg1="right">top-right</div>
+		<div class="target" data-arg0="top" data-arg1="center">top-center</div>
+
+		<div class="target" data-arg0="bottom" data-arg1="left">bottom-left</div>
+		<div class="target" data-arg0="bottom" data-arg1="right">bottom-right</div>
+		<div class="target" data-arg0="bottom" data-arg1="center">bottom-center</div>
+
+		<div class="target" data-arg0="left" data-arg1="top">left-top</div>
+		<div class="target" data-arg0="left" data-arg1="bottom">left-bottom</div>
+		<div class="target" data-arg0="left" data-arg1="middle">left-middle</div>
+		<div class="target">auto</div>
+
+		<div class="target" data-arg0="right" data-arg1="top">right-top</div>
+		<div class="target" data-arg0="right" data-arg1="bottom">right-bottom</div>
+		<div class="target" data-arg0="right" data-arg1="middle">right-middle</div>
+	</div>
+</body>
+</html>

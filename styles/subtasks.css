@@ -1,0 +1,125 @@
+.simple-popover {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  z-index: 200;
+}
+.simple-popover .simple-popover-content {
+  padding: 10px 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+.simple-popover .simple-popover-arrow {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+.simple-popover .simple-popover-arrow .arrow {
+  font-size: 0;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 8px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.simple-popover.direction-right-top .simple-popover-arrow, .simple-popover.direction-right-bottom .simple-popover-arrow, .simple-popover.direction-right-middle .simple-popover-arrow {
+  left: -16px;
+}
+.simple-popover.direction-right-top .arrow-basic, .simple-popover.direction-right-bottom .arrow-basic, .simple-popover.direction-right-middle .arrow-basic {
+  border-color: transparent #fff transparent transparent;
+  left: 1px;
+}
+.simple-popover.direction-right-top .arrow-border, .simple-popover.direction-right-bottom .arrow-border, .simple-popover.direction-right-middle .arrow-border {
+  border-color: transparent #c3c3c3 transparent transparent;
+  left: 0px;
+}
+.simple-popover.direction-right-top .arrow-shadow-0, .simple-popover.direction-right-bottom .arrow-shadow-0, .simple-popover.direction-right-middle .arrow-shadow-0 {
+  border-color: transparent rgba(0, 0, 0, 0.1) transparent transparent;
+  left: -1px;
+}
+.simple-popover.direction-right-top .arrow-shadow-1, .simple-popover.direction-right-bottom .arrow-shadow-1, .simple-popover.direction-right-middle .arrow-shadow-1 {
+  border-color: transparent rgba(0, 0, 0, 0.05) transparent transparent;
+  left: -2px;
+}
+.simple-popover.direction-left-top .simple-popover-arrow, .simple-popover.direction-left-bottom .simple-popover-arrow, .simple-popover.direction-left-middle .simple-popover-arrow {
+  right: -16px;
+}
+.simple-popover.direction-left-top .arrow-basic, .simple-popover.direction-left-bottom .arrow-basic, .simple-popover.direction-left-middle .arrow-basic {
+  border-color: transparent transparent transparent #fff;
+  left: -1px;
+}
+.simple-popover.direction-left-top .arrow-border, .simple-popover.direction-left-bottom .arrow-border, .simple-popover.direction-left-middle .arrow-border {
+  border-color: transparent transparent transparent #c3c3c3;
+  left: 0px;
+}
+.simple-popover.direction-left-top .arrow-shadow-0, .simple-popover.direction-left-bottom .arrow-shadow-0, .simple-popover.direction-left-middle .arrow-shadow-0 {
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.1);
+  left: 1px;
+}
+.simple-popover.direction-left-top .arrow-shadow-1, .simple-popover.direction-left-bottom .arrow-shadow-1, .simple-popover.direction-left-middle .arrow-shadow-1 {
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.05);
+  left: 2px;
+}
+.simple-popover.direction-left-top .simple-popover-arrow, .simple-popover.direction-right-top .simple-popover-arrow {
+  bottom: 16px;
+}
+.simple-popover.direction-left-bottom .simple-popover-arrow, .simple-popover.direction-right-bottom .simple-popover-arrow {
+  top: 16px;
+}
+.simple-popover.direction-left-middle .simple-popover-arrow, .simple-popover.direction-right-middle .simple-popover-arrow {
+  top: 50%;
+  margin-top: -8px;
+}
+.simple-popover.direction-top-left .simple-popover-arrow, .simple-popover.direction-top-right .simple-popover-arrow, .simple-popover.direction-top-center .simple-popover-arrow {
+  bottom: -16px;
+}
+.simple-popover.direction-top-left .arrow-basic, .simple-popover.direction-top-right .arrow-basic, .simple-popover.direction-top-center .arrow-basic {
+  border-color: #fff transparent transparent transparent;
+  top: -1px;
+}
+.simple-popover.direction-top-left .arrow-border, .simple-popover.direction-top-right .arrow-border, .simple-popover.direction-top-center .arrow-border {
+  border-color: #c3c3c3 transparent transparent transparent;
+  top: 0px;
+}
+.simple-popover.direction-top-left .arrow-shadow-0, .simple-popover.direction-top-right .arrow-shadow-0, .simple-popover.direction-top-center .arrow-shadow-0 {
+  border-color: rgba(0, 0, 0, 0.1) transparent transparent transparent;
+  top: 1px;
+}
+.simple-popover.direction-top-left .arrow-shadow-1, .simple-popover.direction-top-right .arrow-shadow-1, .simple-popover.direction-top-center .arrow-shadow-1 {
+  border-color: rgba(0, 0, 0, 0.05) transparent transparent transparent;
+  top: 2px;
+}
+.simple-popover.direction-bottom-left .simple-popover-arrow, .simple-popover.direction-bottom-right .simple-popover-arrow, .simple-popover.direction-bottom-center .simple-popover-arrow {
+  top: -16px;
+}
+.simple-popover.direction-bottom-left .arrow-basic, .simple-popover.direction-bottom-right .arrow-basic, .simple-popover.direction-bottom-center .arrow-basic {
+  border-color: transparent transparent #fff transparent;
+  top: 1px;
+}
+.simple-popover.direction-bottom-left .arrow-border, .simple-popover.direction-bottom-right .arrow-border, .simple-popover.direction-bottom-center .arrow-border {
+  border-color: transparent transparent #c3c3c3 transparent;
+  top: 0px;
+}
+.simple-popover.direction-bottom-left .arrow-shadow-0, .simple-popover.direction-bottom-right .arrow-shadow-0, .simple-popover.direction-bottom-center .arrow-shadow-0 {
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  top: -1px;
+}
+.simple-popover.direction-bottom-left .arrow-shadow-1, .simple-popover.direction-bottom-right .arrow-shadow-1, .simple-popover.direction-bottom-center .arrow-shadow-1 {
+  border-color: transparent transparent rgba(0, 0, 0, 0.05) transparent;
+  top: -2px;
+}
+.simple-popover.direction-top-left .simple-popover-arrow, .simple-popover.direction-bottom-left .simple-popover-arrow {
+  right: 16px;
+}
+.simple-popover.direction-top-right .simple-popover-arrow, .simple-popover.direction-bottom-right .simple-popover-arrow {
+  left: 16px;
+}
+.simple-popover.direction-top-center .simple-popover-arrow, .simple-popover.direction-bottom-center .simple-popover-arrow {
+  left: 50%;
+  margin-left: -8px;
+}
