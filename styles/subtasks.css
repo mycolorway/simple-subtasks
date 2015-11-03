@@ -20,7 +20,7 @@
   position: relative;
   width: 80%;
 }
-.simple-subtasks li.task span.remove-task {
+.simple-subtasks li.task span.icon-remove-task {
   display: inline-block;
   width: 10%;
   text-align: center;

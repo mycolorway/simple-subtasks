@@ -11,7 +11,11 @@ class Subtasks extends SimpleModule
   """
 
   _taskTpl: """
-    <li><input type='checkbox' /></li>
+    
+  """
+
+  _addTpl: """
+    <li class='add task'><span class='icon-add-task'>+</span><input type='text' autofocus='autofocus' placeholder='添加子任务'/></li>
   """
 
   _init: ->
@@ -26,10 +30,10 @@ class Subtasks extends SimpleModule
 
   _render: ->
     @subtasks = $(@_tpl).addClass(@opts.cls)
-    @add_input = $("<li class='add task'><span>+</span><input type='text' autofocus='autofocus' placeholder='添加子任务'/></li>")
+    @add_input = $(@_addTpl)
     @subtasks.append(@add_input)
     @el.data 'subtasks', @subtasks
-    .html @subtasks
+    @subtasks.appendTo @el
 
   _renderCheckbox: (el_array)->
     el_array.each((index, el)->
@@ -42,37 +46,72 @@ class Subtasks extends SimpleModule
 
   _bind: ->
     @subtasks.on 'checked', '.task .simple-checkbox', (e)=>
-      $(e.currentTarget).parent('li.task').addClass('complete')
+      $li = $(e.currentTarget).parent('li.task')
+      task = $li.data('task')
+      task.complete = true
+      $li.addClass('complete').data('task', task).find('input[type=text]').attr('disabled', 'true')
+      @_triggerEvent 'complete', $li
+
     .on 'unchecked', '.task .simple-checkbox', (e)=>
-      $(e.currentTarget).parent('li.task').removeClass('complete')
+      $li = $(e.currentTarget).parent('li.task')
+      task = $li.data('task')
+      task.complete = false
+      $li.removeClass('complete').data('task', task).find('input[type=text]').removeAttr('disabled')
+      @_triggerEvent 'reopen', $li
+
     .on 'keyup', '.add.task input[type=text]', (e)=>
       return unless e.which == 13
       new_task = 
         'complete': false
         'desc': $(e.currentTarget).val()
       $li = @addTask(new_task)
+      $li.data('task', new_task)
       @subtasks.find('.add.task input[type=text]').val('').focus()
-      @triggerHandler 'add',
-        'li': $li
-        'task': new_task
+      @_triggerEvent 'create', $li
 
-    .on 'click', '.task .remove-task', (e)=>
+    .on 'keyup', '.task:not(.add) input[type=text]', (e)=>
+      return unless e.which == 13
+      $input = $(e.currentTarget)
+      $li = $input.parent('li.task')
+      task = $li.data('task')
+      task.desc = $input.val()
+      $li.data 'task', task
+      @_triggerEvent 'edit', $li
+
+    .on 'click', '.task .icon-remove-task', (e)=>
       $li = $(e.currentTarget).parent('li.task')
       if @opts.beforeRemove and typeof @opts.beforeRemove is 'function'
         @opts.beforeRemove($li, $li.data('task'), =>
-            @removeTask($li)
+          @removeTask($li)
         )
       else
         @removeTask($li)
+
+  _triggerEvent: (type, $li)->
+    @trigger type, 
+      'li': $li
+      'task': $li.data('task')
+    @trigger 'update', 
+      'type': type
+      'li': $li
+      'task': $li.data('task')
 
   setTasks: (tasks)->
     throw new Error "simple-subtasks: setTasks args must be Array" unless tasks instanceof Array
     @subtasks.find('ul').html('')
     for t in tasks
       @addTask(t)
+    @
+
+  getTasks: ->
+    tasks = []
+    @subtasks.find('li.task:not(.add)').each((index, li)->
+      tasks.push $(li).data('task')
+    )
+    tasks
 
   addTask: (task)->
-    $li = $("<li class='task'><input type='checkbox' /><input type='text' value='#{task.desc}' /><span class='remove-task'>×</span></li>")
+    $li = $("<li class='task'><input type='checkbox' /><input type='text' value='#{task.desc}' /><span class='icon-remove-task'>×</span></li>")
     $li.data('task', task)
     if task.complete
       $li.addClass('complete').find("input[type='checkbox']").attr('checked', true)
@@ -81,13 +120,12 @@ class Subtasks extends SimpleModule
     $li
 
   removeTask: ($li)->
+    # 先触发事件后删除, 否则 data取不到参数
+    @_triggerEvent 'remove', $li
     $li.remove()
-    @subtasks.triggerHandler 'remove', 
-      'li': $li
-      'task': $li.data('task')
 
   destroy: ->
-
+    @subtasks.remove()
 
 subtasks = (opts) ->
   new Subtasks(opts)
