@@ -41,7 +41,11 @@ class Subtasks extends SimpleModule
     )
 
   _bind: ->
-    @subtasks.on 'keyup', '.add.task input[type=text]', (e)=>
+    @subtasks.on 'checked', '.task .simple-checkbox', (e)=>
+      $(e.currentTarget).parent('li.task').addClass('complete')
+    .on 'unchecked', '.task .simple-checkbox', (e)=>
+      $(e.currentTarget).parent('li.task').removeClass('complete')
+    .on 'keyup', '.add.task input[type=text]', (e)=>
       return unless e.which == 13
       new_task = 
         'complete': false
