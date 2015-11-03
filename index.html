@@ -97,7 +97,7 @@
 
 
         st.on('update', function(evt, params) {
-            // console.log(st.getTasks());
+            console.log(st.getTasks());
         }).on('complete', function(evt, params) {
             $evt_print.html('Complete task: ' + params.task.desc + '.');
         }).on('reopen', function(evt, params) {
