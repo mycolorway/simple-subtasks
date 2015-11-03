@@ -35,8 +35,13 @@
   "_release": "2.0.1",
   "_resolution": {
     "type": "version",
+<<<<<<< HEAD
     "tag": "v2.0.1",
     "commit": "1e38706d1524d1cb34395903f953a3d38ab4f848"
+=======
+    "tag": "2.0.1",
+    "commit": "7ff8857b7dc1e9396dc73d96ddf0cf3e52a33644"
+>>>>>>> upload vendor
   },
   "_source": "git://github.com/mycolorway/simple-checkbox.git",
   "_target": "2.x",

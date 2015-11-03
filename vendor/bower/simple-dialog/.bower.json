@@ -36,6 +36,12 @@
     "commit": "ed240edd038d704d81829616c971a505b51baf51"
   },
   "_source": "git://github.com/mycolorway/simple-dialog.git",
+<<<<<<< HEAD
   "_target": "1.x",
   "_originalSource": "simple-dialog"
+=======
+  "_target": "~1.1.12",
+  "_originalSource": "simple-dialog",
+  "_direct": true
+>>>>>>> upload vendor
 }

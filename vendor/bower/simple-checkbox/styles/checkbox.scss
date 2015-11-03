@@ -46,7 +46,11 @@ $disabled-color: rgba(53, 53, 53, 0.26);
   &.disabled .checkbox-container {
     background-color: $disabled-color;
     border:none!important;
+<<<<<<< HEAD
     cursor: no-drop;
+=======
+    cursor: default;
+>>>>>>> upload vendor
   }
 
   &.checked .checkbox-container {
@@ -67,7 +71,11 @@ $disabled-color: rgba(53, 53, 53, 0.26);
   &.disabled.checked .checkbox-container {
     border:none!important;
     background-color: $disabled-color;
+<<<<<<< HEAD
     cursor: no-drop;
+=======
+    cursor: default;
+>>>>>>> upload vendor
   }
 
   .checkbox-ripple {

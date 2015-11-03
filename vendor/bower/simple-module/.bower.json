@@ -30,6 +30,10 @@
     "commit": "42cddcd5e9b60d28a480526cbcd9f9fe529b2a56"
   },
   "_source": "git://github.com/mycolorway/simple-module.git",
+<<<<<<< HEAD
   "_target": "~2.0.6",
+=======
+  "_target": "2.x",
+>>>>>>> upload vendor
   "_originalSource": "simple-module"
 }
