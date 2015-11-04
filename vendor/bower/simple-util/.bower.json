@@ -1,0 +1,35 @@
+{
+  "name": "simple-util",
+  "version": "2.0.2",
+  "homepage": "https://github.com/mycolorway/simple-util",
+  "authors": [
+    "farthinker <farthinker@gmail.com>"
+  ],
+  "description": "Some helper methods for simple libraries",
+  "main": "lib/util.js",
+  "keywords": [
+    "helper"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor",
+    "Gruntfile.coffee",
+    "package.json",
+    "README.md",
+    "umd.hbs"
+  ],
+  "dependencies": {
+    "jquery": "2.x"
+  },
+  "_release": "2.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.2",
+    "commit": "3b2f39e77473ae44c58b1a5497688b48c616b0c8"
+  },
+  "_source": "git://github.com/mycolorway/simple-util.git",
+  "_target": "2.x",
+  "_originalSource": "simple-util"
+}
