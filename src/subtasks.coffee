@@ -15,7 +15,7 @@ class Subtasks extends SimpleModule
   """
 
   _addTpl: """
-    <li class='add task'><span class='icon-add-task'>+</span><input type='text' autofocus='autofocus' placeholder='添加子任务'/></li>
+    <li class='add task'><span class='icon-add-task'>+</span><textarea rows='1' type='text' autofocus='autofocus' placeholder='添加子任务'></textarea></li>
   """
 
   _init: ->
@@ -30,8 +30,8 @@ class Subtasks extends SimpleModule
 
   _render: ->
     @subtasks = $(@_tpl).addClass(@opts.cls)
-    @add_input = $(@_addTpl)
-    @subtasks.append(@add_input)
+    @add_textarea = $(@_addTpl)
+    @subtasks.append(@add_textarea)
     @el.data 'subtasks', @subtasks
     @subtasks.appendTo @el
 
@@ -49,27 +49,27 @@ class Subtasks extends SimpleModule
       $li = $(e.currentTarget).parent('li.task')
       task = $li.data('task')
       task.complete = true
-      $li.addClass('complete').data('task', task).find('input[type=text]').attr('disabled', 'true')
+      $li.addClass('complete').data('task', task).find('textarea').attr('disabled', 'true')
       @_triggerEvent 'complete', $li
 
     .on 'unchecked', '.task .simple-checkbox', (e)=>
       $li = $(e.currentTarget).parent('li.task')
       task = $li.data('task')
       task.complete = false
-      $li.removeClass('complete').data('task', task).find('input[type=text]').removeAttr('disabled')
+      $li.removeClass('complete').data('task', task).find('textarea').removeAttr('disabled')
       @_triggerEvent 'reopen', $li
 
-    .on 'keyup', '.add.task input[type=text]', (e)=>
+    .on 'keyup', '.add.task textarea', (e)=>
       return unless e.which == 13
       new_task = 
         'complete': false
         'desc': $(e.currentTarget).val()
       $li = @addTask(new_task)
       $li.data('task', new_task)
-      @subtasks.find('.add.task input[type=text]').val('').focus()
+      @subtasks.find('.add.task textarea').val('').focus()
       @_triggerEvent 'create', $li
 
-    .on 'keyup', '.task:not(.add) input[type=text]', (e)=>
+    .on 'keyup', '.task:not(.add) textarea', (e)=>
       return unless e.which == 13
       $input = $(e.currentTarget)
       $li = $input.parent('li.task')
@@ -111,11 +111,11 @@ class Subtasks extends SimpleModule
     tasks
 
   addTask: (task)->
-    $li = $("<li class='task'><input type='checkbox' /><input type='text' value='#{task.desc}' /><span class='icon-remove-task'>×</span></li>")
+    $li = $("<li class='task'><input type='checkbox' /><textarea rows='1'>#{task.desc}</textarea><span class='icon-remove-task'>×</span></li>")
     $li.data('task', task)
     if task.complete
       $li.addClass('complete').find("input[type='checkbox']").attr('checked', true)
-    $li.insertBefore @add_input
+    $li.insertBefore @add_textarea
     @_renderCheckbox($li.find('input[type=checkbox]'))
     $li
 
