@@ -5,7 +5,6 @@
   .task {
     position: relative;
     width: 100%;
-    height: 48px;
     line-height: 48px;
     border-bottom: 1px solid #E8E8E8;
 
@@ -13,55 +12,49 @@
       text-decoration: line-through;
       color: #999;
     }
+  }
 
-    .simple-checkbox {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      z-index: 2;
-    }
+  .simple-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
 
-    textarea {
-      display: block;
-      padding: 15px 50px;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      font-size: 16px;
-      outline: none;
-      resize: none;
-      border: 0;
-      z-index: 1;
-    }
+  textarea {
+    display: block;
+    padding: 15px 50px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    line-height: 1.2;
+    outline: none;
+    resize: none;
+    border: 0;
+    z-index: 1;
+  }
 
-    .icon-add-task {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      margin: auto;
-      width: 48px;
-      line-height: 48px;
-      color: #9b9b9b;
-      font-size: 14px;
-      text-align: center;
-    }
+  .icon-add-task {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    line-height: 48px;
+    color: #9b9b9b;
+    text-align: center;
+  }
 
-    .icon-remove-task {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      width: 48px;
-      line-height: 48px;
-      color: #9b9b9b;
-      font-size: 14px;
-      text-align: center;
-      cursor: pointer;
-      z-index: 2;
-    }
+  .icon-remove-task {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    color: #9b9b9b;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
   }
 }
