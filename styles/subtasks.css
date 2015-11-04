@@ -1,54 +1,59 @@
 .simple-subtasks {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
   list-style: none;
   font-size: 16px;
 }
-.simple-subtasks li.task {
-  padding: 8px 0;
+.simple-subtasks .task {
+  position: relative;
   width: 100%;
-  border-bottom: 1px solid #ccc;
-  font-size: 16px;
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #E8E8E8;
 }
-.simple-subtasks li.task .simple-checkbox {
-  margin: 0 8px;
-  position: absolute;
-  width: 10%;
-  z-index: 2;
-}
-.simple-subtasks li.task textarea {
-  box-sizing: border-box;
-  padding: 0 20px 0 10%;
-  display: inline-block;
-  vertical-align: middle;
-  border: 0;
-  outline: none;
-  height: 18px;
-  position: relative;
-  width: 90%;
-  resize: none;
-  font-size: 16px;
-  z-index: 1;
-}
-.simple-subtasks li.task span.icon-remove-task {
-  display: inline-block;
-  vertical-align: middle;
-  position: absolute;
-  text-align: center;
-  cursor: pointer;
-}
-.simple-subtasks li.task.add span {
-  position: relative;
-  vertical-align: middle;
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  margin: 0 5px;
-  text-align: center;
-  font-size: 18px;
-}
-.simple-subtasks li.task.complete textarea {
+.simple-subtasks .task.complete textarea {
   text-decoration: line-through;
   color: #999;
+}
+.simple-subtasks .task .simple-checkbox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  margin: auto;
+  z-index: 2;
+}
+.simple-subtasks .task textarea {
+  display: block;
+  padding: 15px 50px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+  border: 0;
+  z-index: 1;
+}
+.simple-subtasks .task .icon-add-task {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  width: 48px;
+  color: #9b9b9b;
+  font-size: 14px;
+  text-align: center;
+}
+.simple-subtasks .task .icon-remove-task {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 48px;
+  color: #9b9b9b;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 2;
 }

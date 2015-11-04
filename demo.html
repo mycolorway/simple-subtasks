@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <link media="all" rel="stylesheet" type="text/css" href="vendor/bower/simple-checkbox/styles/checkbox.css" />
     <link media="all" rel="stylesheet" type="text/css" href="vendor/bower/simple-dialog/styles/dialog.css" />
-    <link media="all" rel="stylesheet" type="text/css" href="vendor/bower/reset-css/reset.css" />
     <link media="all" rel="stylesheet" type="text/css" href="styles/subtasks.css" />
     <script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
+    <script type="text/javascript" src="vendor/bower/simple-util/lib/util.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-checkbox/lib/checkbox.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-dialog/lib/dialog.js"></script>
     <script type="text/javascript" src="lib/subtasks.js"></script>
@@ -20,8 +20,14 @@
     .wrapper {
         width: 100%;
         height: 100%;
+        margin: 0;
     }
-    
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
     .wrapper h1 {
         margin: 30px 0 20px 0;
         font-size: 36px;
@@ -35,14 +41,14 @@
     	padding-bottom: 20px;
     	color: red;
     }
-    
+
     .phone-wrapper {
         width: 300px;
         height: 480px;
         border: 1px solid #999;
         margin: 0 auto;
     }
-    
+
     @media(max-width: 600px)  {
         .phone-wrapper {
             width: 100%;
@@ -69,9 +75,11 @@
         }, {
             'complete': true,
             'desc': '一个已经完成了的子任务'
-        }]
+        }];
         var st = simple.subtasks({
             el: $("#subtasks"),
+            size: 22,
+            animation: true,
             beforeRemove: function(el, task, remove_task) {
                 var dialog = simple.dialog.confirm({
                     content: "确定要删除子任务：" + task.desc + " 吗？",
