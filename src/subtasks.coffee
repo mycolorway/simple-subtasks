@@ -65,7 +65,12 @@ class Subtasks extends SimpleModule
     .on 'keydown', '.task textarea', (e) =>
       return unless e.which == 13
       e.preventDefault()
-      @_updateTask $(e.currentTarget)
+      $textarea = $(e.currentTarget)
+      if $textarea.closest('.task').hasClass 'add'
+        @_updateTask $textarea
+        $textarea.focus()
+      else
+        $textarea.trigger 'blur'
 
     .on 'blur', '.task textarea', (e) =>
       $textarea = $(e.currentTarget)
@@ -76,7 +81,7 @@ class Subtasks extends SimpleModule
 
     .on 'click', '.task .icon-remove-task', (e) =>
       $task = $(e.currentTarget).closest('.task')
-      if @opts.beforeRemove and typeof @opts.beforeRemove is 'function'
+      if typeof @opts.beforeRemove is 'function'
         @opts.beforeRemove $task, $task.data('task'), =>
           @removeTask $task
       else
@@ -93,13 +98,14 @@ class Subtasks extends SimpleModule
 
   _updateTask: ($textarea) ->
     $task = $textarea.closest('.task')
+
     if $task.hasClass 'add'
       new_task =
         complete: false
         desc: $textarea.val()
       $task = @addTask(new_task)
       $task.data('task', new_task)
-      $textarea.val('').focus()
+      $textarea.val('')
       @_triggerEvent 'create', $task
     else
       task = $task.data('task')
@@ -110,7 +116,7 @@ class Subtasks extends SimpleModule
 
   setTasks: (tasks) ->
     throw new Error "simple-subtasks: setTasks args must be Array" unless tasks instanceof Array
-    @subtasks.find('ul').html('')
+    @subtasks.find('.simple-subtasks').empty()
     for t in tasks
       @addTask(t)
     @
