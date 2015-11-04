@@ -12,11 +12,11 @@ class Subtasks extends SimpleModule
   """
 
   _taskTpl: """
-    <li class='task'><input type='checkbox' /><textarea rows='1'></textarea><span class='icon-remove-task'>×</span></li>
+    <li class='task'><input type='checkbox' /><textarea rows='1'></textarea><i class='icon-remove-task'><span>×</span></i></li>
   """
 
   _addTpl: """
-    <li class='add task'><span class='icon-add-task'>+</span><textarea rows='1' placeholder='添加子任务'></textarea></li>
+    <li class='add task'><i class='icon-add-task'><span>+</span></i><textarea rows='1' placeholder='添加子任务'></textarea></li>
   """
 
   _init: ->
