@@ -17,7 +17,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 12px;
+  left: 0;
   margin: auto;
   z-index: 2;
 }
@@ -40,6 +40,7 @@
   bottom: 0;
   margin: auto;
   width: 48px;
+  line-height: 48px;
   color: #9b9b9b;
   font-size: 14px;
   text-align: center;
@@ -51,6 +52,7 @@
   bottom: 0;
   margin: auto;
   width: 48px;
+  line-height: 48px;
   color: #9b9b9b;
   font-size: 14px;
   text-align: center;
