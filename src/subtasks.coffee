@@ -47,7 +47,7 @@ class Subtasks extends SimpleModule
 
   _bind: ->
     @subtasks.on 'checked', '.task .simple-checkbox', (e) =>
-      $task = $(e.currentTarget).parent('li.task')
+      $task = $(e.currentTarget).closest('.task')
       task = $task.data('task')
       task.complete = true
       $task.addClass('complete').data('task', task)
@@ -55,7 +55,7 @@ class Subtasks extends SimpleModule
       @_triggerEvent 'complete', $task
 
     .on 'unchecked', '.task .simple-checkbox', (e) =>
-      $task = $(e.currentTarget).parent('li.task')
+      $task = $(e.currentTarget).closest('.task')
       task = $task.data('task')
       task.complete = false
       $task.removeClass('complete').data('task', task)
@@ -65,35 +65,17 @@ class Subtasks extends SimpleModule
     .on 'keydown', '.task textarea', (e) =>
       return unless e.which == 13
       e.preventDefault()
-      $textarea = $(e.currentTarget)
-      $task = $textarea.parent('li.task')
-      if $task.hasClass 'add'
-        new_task =
-          complete: false
-          desc: $textarea.val()
-        $task = @addTask(new_task)
-        $task.data('task', new_task)
-        $textarea.val('').focus()
-        @_triggerEvent 'create', $task
-      else
-        task = $task.data('task')
-        task.desc = $textarea.val()
-        $task.data 'task', task
-        @_triggerEvent 'edit', $task
+      @_updateTask $(e.currentTarget)
 
-    .on 'blur', '.task:not(.add) textarea', (e) =>
+    .on 'blur', '.task textarea', (e) =>
       $textarea = $(e.currentTarget)
-      $task = $textarea.parent('li.task')
       if $textarea.val()
-        task = $task.data('task')
-        task.desc = $textarea.val()
-        $task.data 'task', task
-        @_triggerEvent 'edit', $task
+        @_updateTask $textarea
       else
-        @removeTask $task
+        @removeTask $textarea.closest('.task')
 
     .on 'click', '.task .icon-remove-task', (e) =>
-      $task = $(e.currentTarget).parent('li.task')
+      $task = $(e.currentTarget).closest('.task')
       if @opts.beforeRemove and typeof @opts.beforeRemove is 'function'
         @opts.beforeRemove $task, $task.data('task'), =>
           @removeTask $task
@@ -102,13 +84,28 @@ class Subtasks extends SimpleModule
 
 
   _triggerEvent: (type, $task) ->
-    @trigger type,
-      li: $task
-      task: $task.data('task')
-    @trigger 'update',
+    params =
       type: type
-      li: $task
       task: $task.data('task')
+    @trigger type, params
+    @trigger 'update', params
+
+
+  _updateTask: ($textarea) ->
+    $task = $textarea.closest('.task')
+    if $task.hasClass 'add'
+      new_task =
+        complete: false
+        desc: $textarea.val()
+      $task = @addTask(new_task)
+      $task.data('task', new_task)
+      $textarea.val('').focus()
+      @_triggerEvent 'create', $task
+    else
+      task = $task.data('task')
+      task.desc = $textarea.val()
+      $task.data 'task', task
+      @_triggerEvent 'edit', $task
 
 
   setTasks: (tasks) ->
@@ -121,8 +118,8 @@ class Subtasks extends SimpleModule
 
   getTasks: ->
     tasks = []
-    @subtasks.find('li.task:not(.add)').each (index, li)->
-      tasks.push $(li).data('task')
+    @subtasks.find('.task:not(.add)').each (index, task)->
+      tasks.push $(task).data('task')
     tasks
 
 
@@ -139,9 +136,9 @@ class Subtasks extends SimpleModule
 
 
   removeTask: ($task) ->
-    # 先触发事件后删除, 否则 data 取不到参数
-    @_triggerEvent 'remove', $task
+    return  if $task.hasClass 'add'
     $task.remove()
+    @_triggerEvent 'remove', $task
 
 
   destroy: ->

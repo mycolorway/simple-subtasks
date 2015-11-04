@@ -1,6 +1,7 @@
 .simple-subtasks {
-  list-style: none;
   font-size: 16px;
+  list-style: none;
+  overflow: hidden;
 
   .task {
     position: relative;
@@ -32,6 +33,7 @@
     resize: none;
     border: 0;
     z-index: 1;
+    background-color: #fff;
   }
 
   .icon-add-task {
@@ -39,7 +41,6 @@
     top: 0;
     left: 0;
     width: 48px;
-    line-height: 48px;
     color: #9b9b9b;
     text-align: center;
   }
@@ -51,7 +52,6 @@
     bottom: 0;
     width: 48px;
     height: 48px;
-    line-height: 48px;
     color: #9b9b9b;
     text-align: center;
     cursor: pointer;
