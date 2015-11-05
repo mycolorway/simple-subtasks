@@ -74,7 +74,7 @@ class Subtasks extends SimpleModule
 
     .on 'blur', '.task textarea', (e) =>
       $textarea = $(e.currentTarget)
-      if $textarea.val()
+      if $textarea.val().trim()
         @_updateTask $textarea
       else
         @removeTask $textarea.closest('.task')
@@ -98,18 +98,20 @@ class Subtasks extends SimpleModule
 
   _updateTask: ($textarea) ->
     $task = $textarea.closest('.task')
+    content = $textarea.val().trim()
+    return  unless content
 
     if $task.hasClass 'add'
       new_task =
         complete: false
-        desc: $textarea.val()
+        desc: content
       $task = @addTask(new_task)
       $task.data('task', new_task)
       $textarea.val('')
       @_triggerEvent 'create', $task
     else
       task = $task.data('task')
-      task.desc = $textarea.val()
+      task.desc = content
       $task.data 'task', task
       @_triggerEvent 'edit', $task
 
