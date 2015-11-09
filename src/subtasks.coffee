@@ -91,6 +91,7 @@ class Subtasks extends SimpleModule
   _triggerEvent: (type, $task) ->
     params =
       type: type
+      element: $task
       task: $task.data('task')
     @trigger type, params
     @trigger 'update', params
