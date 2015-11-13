@@ -33,7 +33,7 @@ class Subtasks extends SimpleModule
     @subtasks = $(@_tpl).addClass(@opts.cls)
     @add_textarea = $(@_addTpl)
     @subtasks.append(@add_textarea)
-    @el.data 'subtasks', @subtasks
+    @el.data 'subtasks', @
     @subtasks.appendTo @el
 
 
@@ -134,7 +134,7 @@ class Subtasks extends SimpleModule
 
   addTask: (task) ->
     $task = $(@_taskTpl)
-    $task.data('task', task).find('textarea').val task.desc
+    $task.data('task', task).find('textarea').html task.desc
     if task.complete
       $task.addClass('complete')
         .find("input[type='checkbox']").prop('checked', true)
@@ -146,8 +146,14 @@ class Subtasks extends SimpleModule
 
   removeTask: ($task) ->
     return  if $task.hasClass 'add'
+    task = $task.data 'task'
     $task.remove()
-    @_triggerEvent 'remove', $task
+    params =
+      type: 'remove'
+      element: null
+      task: task
+    @trigger 'remove', params
+    @trigger 'update', params
 
 
   destroy: ->

@@ -26,5 +26,8 @@
     "simple-checkbox": "2.x",
     "simple-module": "2.x",
     "simple-dialog": "1.x"
+  },
+  "devDependencies": {
+    "jasmine-jquery": "~2.1.0"
   }
 }
