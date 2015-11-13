@@ -36,7 +36,7 @@ module.exports = (grunt) ->
           'lib/subtasks.js'
           'specs/*.js'
         ],
-        tasks: 'jasmine:test:build'
+        tasks: 'jasmine'
 
     jasmine:
       test:
@@ -47,7 +47,10 @@ module.exports = (grunt) ->
           specs: 'spec/subtasks-spec.js'
           vendor: [
             'vendor/bower/jquery/dist/jquery.min.js'
+            'vendor/bower/jasmine-jquery/lib/jasmine-jquery.js'
             'vendor/bower/simple-module/lib/module.js'
+            'vendor/bower/simple-util/lib/util.js'
+            'vendor/bower/simple-checkbox/lib/checkbox.js'
           ]
     umd:
       all:
@@ -71,6 +74,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-umd'
 
-  grunt.registerTask 'default', ['sass', 'coffee', 'umd', 'jasmine:test:build', 'watch']
+  grunt.registerTask 'default', ['sass', 'coffee', 'umd', 'jasmine', 'watch']
   grunt.registerTask 'test', ['sass', 'coffee', 'jasmine:terminal']
 
