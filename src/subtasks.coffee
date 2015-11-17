@@ -5,6 +5,7 @@ class Subtasks extends SimpleModule
     cls: null
     size: 18
     animation: false
+    type: 'circle' # or 'square'
     beforeRemove: null
 
   _tpl: """
@@ -43,6 +44,7 @@ class Subtasks extends SimpleModule
         el: el
         size: @opts.size
         animation: @opts.animation
+        type: @opts.type
 
 
   _bind: ->
