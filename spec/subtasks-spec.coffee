@@ -4,6 +4,15 @@ describe 'simple-subtasks', ->
 
   $subtasks = null
 
+  findTaskEl = ($el, desc)->
+    target = null
+    $el.find('.task:not(.add)').each((indexm, task_el)->
+      task = $(task_el).data('task')
+      if task.desc == desc
+        target = task_el
+    )
+    $(target)
+
   beforeEach ->
     data = [{
         'complete': false,
@@ -28,11 +37,12 @@ describe 'simple-subtasks', ->
   # render
   it 'should render subtasks', ->
     expect($el.find('.simple-subtasks')).toExist()
-    expect($el.find('.simple-subtasks .task')).toExist()
+    expect($el.find('.simple-subtasks .task:not(.add)')).toExist()
     expect($el.find('.simple-subtasks .add.task')).toExist()
 
   it 'should render complete task when complete is true', ->
-    expect($el.find('.task:contains(A completed sub-task)')).toHaveClass 'complete'
+    $el.find('.task')
+    expect(findTaskEl($el, 'A completed sub-task')).toHaveClass 'complete'
 
   # behavior
   it 'should toggle state when click checkbox', ->
@@ -70,7 +80,7 @@ describe 'simple-subtasks', ->
     evt.which = 13
     $add_task.find('textarea').val('Another sub-task').trigger(evt)
 
-    expect('.task:contains(Another sub-task)').toExist()
+    expect(findTaskEl($el, 'Another sub-task')).toExist()
     expect($('.add.task textarea').val()).toBe('')
 
     expect(spyEventCreate).toHaveBeenTriggered()
@@ -80,7 +90,7 @@ describe 'simple-subtasks', ->
   it 'should change task desc when task textarea trigger enter event', ->
     spyEventEdit = spyOnEvent($subtasks, 'edit')
     spyEventUpdate = spyOnEvent($subtasks, 'update')
-    $edit_task = $el.find('.task:contains(A normal sub-task)').first()
+    $edit_task = findTaskEl($el, 'A normal sub-task')
     evt = $.Event('keydown')
     evt.which = 13
     $edit_task.find('textarea').val('edit task desc').trigger(evt)
@@ -92,7 +102,7 @@ describe 'simple-subtasks', ->
   it 'should change task desc when blur task textarea and value is not empty', ->
     spyEventEdit = spyOnEvent($subtasks, 'edit')
     spyEventUpdate = spyOnEvent($subtasks, 'update')
-    $edit_task = $el.find('.task:contains(A normal sub-task)').first()
+    $edit_task = findTaskEl($el, 'A normal sub-task')
     $edit_task.find('textarea').val('edit task desc').trigger('blur')
 
     expect($edit_task.find('textarea').val()).toBe('edit task desc')
@@ -102,7 +112,7 @@ describe 'simple-subtasks', ->
   it 'should remove task when blur task textarea and value is empty', ->
     spyEventRemove = spyOnEvent($subtasks, 'remove')
     spyEventUpdate = spyOnEvent($subtasks, 'update')
-    $remove_task = $el.find('.task:contains(A normal sub-task)').first()
+    $remove_task = findTaskEl($el, 'A normal sub-task')
     $remove_task.find('textarea').val('').trigger('blur')
 
     expect($el.find('.task:contains(A normal sub-task)')).not.toExist()
@@ -111,6 +121,6 @@ describe 'simple-subtasks', ->
 
   it 'should call func beforeRemove when click .icon-remove-task', ->
     spyOn($subtasks.opts, 'beforeRemove')
-    $remove_task = $el.find('.task:contains(A normal sub-task)').first()
+    $remove_task = findTaskEl($el, 'A normal sub-task')
     $remove_task.find('.icon-remove-task').trigger 'click'
     expect($subtasks.opts.beforeRemove).toHaveBeenCalled()

@@ -142,7 +142,7 @@ class Subtasks extends SimpleModule
 
   addTask: (task) ->
     $task = $(@_taskTpl)
-    $task.data('task', task).find('textarea').html task.desc
+    $task.data('task', task).find('textarea').val task.desc
     if task.complete
       $task.addClass('complete')
         .find("input[type='checkbox']").prop('checked', true)
