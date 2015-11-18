@@ -1,8 +1,20 @@
 describe('simple-subtasks', function() {
-  var $el, $subtasks;
+  var $el, $subtasks, findTaskEl;
   $el = $('<div id="subtasks"></div>');
   $el.appendTo('body');
   $subtasks = null;
+  findTaskEl = function($el, desc) {
+    var target;
+    target = null;
+    $el.find('.task:not(.add)').each(function(indexm, task_el) {
+      var task;
+      task = $(task_el).data('task');
+      if (task.desc === desc) {
+        return target = task_el;
+      }
+    });
+    return $(target);
+  };
   beforeEach(function() {
     var data;
     data = [
@@ -30,11 +42,12 @@ describe('simple-subtasks', function() {
   });
   it('should render subtasks', function() {
     expect($el.find('.simple-subtasks')).toExist();
-    expect($el.find('.simple-subtasks .task')).toExist();
+    expect($el.find('.simple-subtasks .task:not(.add)')).toExist();
     return expect($el.find('.simple-subtasks .add.task')).toExist();
   });
   it('should render complete task when complete is true', function() {
-    return expect($el.find('.task:contains(A completed sub-task)')).toHaveClass('complete');
+    $el.find('.task');
+    return expect(findTaskEl($el, 'A completed sub-task')).toHaveClass('complete');
   });
   it('should toggle state when click checkbox', function() {
     var $task;
@@ -72,7 +85,7 @@ describe('simple-subtasks', function() {
     evt = $.Event('keydown');
     evt.which = 13;
     $add_task.find('textarea').val('Another sub-task').trigger(evt);
-    expect('.task:contains(Another sub-task)').toExist();
+    expect(findTaskEl($el, 'Another sub-task')).toExist();
     expect($('.add.task textarea').val()).toBe('');
     expect(spyEventCreate).toHaveBeenTriggered();
     return expect(spyEventUpdate).toHaveBeenTriggered();
@@ -81,7 +94,7 @@ describe('simple-subtasks', function() {
     var $edit_task, evt, spyEventEdit, spyEventUpdate;
     spyEventEdit = spyOnEvent($subtasks, 'edit');
     spyEventUpdate = spyOnEvent($subtasks, 'update');
-    $edit_task = $el.find('.task:contains(A normal sub-task)').first();
+    $edit_task = findTaskEl($el, 'A normal sub-task');
     evt = $.Event('keydown');
     evt.which = 13;
     $edit_task.find('textarea').val('edit task desc').trigger(evt);
@@ -93,7 +106,7 @@ describe('simple-subtasks', function() {
     var $edit_task, spyEventEdit, spyEventUpdate;
     spyEventEdit = spyOnEvent($subtasks, 'edit');
     spyEventUpdate = spyOnEvent($subtasks, 'update');
-    $edit_task = $el.find('.task:contains(A normal sub-task)').first();
+    $edit_task = findTaskEl($el, 'A normal sub-task');
     $edit_task.find('textarea').val('edit task desc').trigger('blur');
     expect($edit_task.find('textarea').val()).toBe('edit task desc');
     expect(spyEventEdit).toHaveBeenTriggered();
@@ -103,7 +116,7 @@ describe('simple-subtasks', function() {
     var $remove_task, spyEventRemove, spyEventUpdate;
     spyEventRemove = spyOnEvent($subtasks, 'remove');
     spyEventUpdate = spyOnEvent($subtasks, 'update');
-    $remove_task = $el.find('.task:contains(A normal sub-task)').first();
+    $remove_task = findTaskEl($el, 'A normal sub-task');
     $remove_task.find('textarea').val('').trigger('blur');
     expect($el.find('.task:contains(A normal sub-task)')).not.toExist();
     expect(spyEventRemove).toHaveBeenTriggered();
@@ -112,7 +125,7 @@ describe('simple-subtasks', function() {
   return it('should call func beforeRemove when click .icon-remove-task', function() {
     var $remove_task;
     spyOn($subtasks.opts, 'beforeRemove');
-    $remove_task = $el.find('.task:contains(A normal sub-task)').first();
+    $remove_task = findTaskEl($el, 'A normal sub-task');
     $remove_task.find('.icon-remove-task').trigger('click');
     return expect($subtasks.opts.beforeRemove).toHaveBeenCalled();
   });
