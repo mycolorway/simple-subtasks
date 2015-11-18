@@ -1,6 +1,6 @@
 {
   "name": "simple-subtasks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/mycolorway/simple-subtasks",
   "authors": [
     "zhangrui <zhangrui@mycolorway.com>",
@@ -26,5 +26,8 @@
     "simple-checkbox": "2.x",
     "simple-module": "2.x",
     "simple-dialog": "1.x"
+  },
+  "devDependencies": {
+    "jasmine-jquery": "~2.1.0"
   }
 }
