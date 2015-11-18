@@ -64,6 +64,11 @@ class Subtasks extends SimpleModule
         .find('textarea').prop('disabled', false)
       @_triggerEvent 'reopen', $task
 
+    .on 'focus', '.task textarea', (e)=>
+      $textarea = $(e.currentTarget)
+      return unless $textarea.val().trim()
+      @current_task = $textarea.closest('.task').data('task')
+
     .on 'keydown', '.task textarea', (e) =>
       return unless e.which == 13
       e.preventDefault()
@@ -114,6 +119,7 @@ class Subtasks extends SimpleModule
       @_triggerEvent 'create', $task
     else
       task = $task.data('task')
+      return if task.desc == content
       task.desc = content
       $task.data 'task', task
       @_triggerEvent 'edit', $task
