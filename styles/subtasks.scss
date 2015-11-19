@@ -58,4 +58,10 @@
     cursor: pointer;
     z-index: 2;
   }
+
+  &.unable-edit {
+    .icon-remove-task {
+      display: none;
+    }
+  }
 }

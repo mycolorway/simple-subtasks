@@ -3,6 +3,9 @@
   list-style: none;
   overflow: hidden;
 }
+.simple-subtasks.editable .icon-remove-task {
+  display: inline;
+}
 .simple-subtasks .task {
   position: relative;
   width: 100%;
@@ -42,6 +45,7 @@
   text-align: center;
 }
 .simple-subtasks .icon-remove-task {
+  display: none;
   position: absolute;
   top: 0;
   right: 0;
