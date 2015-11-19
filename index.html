@@ -80,6 +80,7 @@
             el: $("#subtasks"),
             size: 22,
             animation: true,
+            editable: false,
             beforeRemove: function(el, task, remove_task) {
                 var dialog = simple.dialog.confirm({
                     content: "确定要删除子任务：" + task.desc + " 吗？",
@@ -91,7 +92,9 @@
                     }
                 });
             }
-        }).setTasks(data);
+        })
+
+        st.setTasks(data);
 
         $evt_print = $('#evt-print');
 
