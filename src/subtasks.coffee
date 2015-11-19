@@ -7,6 +7,7 @@ class Subtasks extends SimpleModule
     animation: false
     type: 'circle' # or 'square'
     beforeRemove: null
+    editable: true
 
   _tpl: """
     <ul class='simple-subtasks'></ul>
@@ -26,6 +27,7 @@ class Subtasks extends SimpleModule
     if @opts.el is null
       throw new Error "simple-subtasks: el option is invalid"
     @el = @opts.el
+    @editable = @opts.editable
     @_render()
     @_bind()
 
@@ -33,7 +35,10 @@ class Subtasks extends SimpleModule
   _render: ->
     @subtasks = $(@_tpl).addClass(@opts.cls)
     @add_textarea = $(@_addTpl)
-    @subtasks.append(@add_textarea)
+    if @editable
+      @subtasks.append(@add_textarea)
+    else
+      @subtasks.addClass('unable-edit').find('textarea').prop('disabled', true)
     @el.data 'subtasks', @
     @subtasks.appendTo @el
 
@@ -147,7 +152,11 @@ class Subtasks extends SimpleModule
       $task.addClass('complete')
         .find("input[type='checkbox']").prop('checked', true)
         .end().find('textarea').prop('disabled', true)
-    $task.insertBefore @add_textarea
+    if @editable
+      $task.insertBefore @add_textarea
+    else
+      $task.find('textarea').prop('disabled', true)
+      $task.appendTo(@subtasks)
     @_renderCheckbox $task.find('input[type=checkbox]')
     $task
 
