@@ -66,7 +66,7 @@ class Subtasks extends SimpleModule
       task = $task.data('task')
       task.complete = false
       $task.removeClass('complete').data('task', task)
-        .find('textarea').prop('disabled', false)
+      $task.find('textarea').prop('disabled', false) if @editable
       @_triggerEvent 'reopen', $task
 
     .on 'focus', '.task textarea', (e)=>
