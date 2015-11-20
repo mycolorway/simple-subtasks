@@ -34,10 +34,10 @@ describe('simple-subtasks', function() {
         return remove_task();
       }
     }).setTasks(data);
-    return $subtasks = $el.data('subtasks');
+    return $subtasks = $el.find('.simple-subtasks').data('subtasks');
   });
   afterEach(function() {
-    $('#subtasks').data('subtasks').destroy();
+    $('.simple-subtasks').data('subtasks').destroy();
     return $subtasks = null;
   });
   it('should render subtasks', function() {
