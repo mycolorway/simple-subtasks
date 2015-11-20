@@ -39,7 +39,7 @@ class Subtasks extends SimpleModule
       @subtasks.append(@add_textarea)
     else
       @subtasks.addClass('unable-edit').find('textarea').prop('disabled', true)
-    @el.data 'subtasks', @
+    @subtasks.data 'subtasks', @
     @subtasks.appendTo @el
 
 

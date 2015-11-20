@@ -28,10 +28,10 @@ describe 'simple-subtasks', ->
         beforeRemove: (el, task, remove_task)->
           remove_task();
     .setTasks(data);
-    $subtasks = $el.data('subtasks')
+    $subtasks = $el.find('.simple-subtasks').data('subtasks')
 
   afterEach ->
-    $('#subtasks').data('subtasks').destroy()
+    $('.simple-subtasks').data('subtasks').destroy()
     $subtasks = null
 
   # render
