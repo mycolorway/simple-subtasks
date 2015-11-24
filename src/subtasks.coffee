@@ -115,11 +115,13 @@ class Subtasks extends SimpleModule
     return  unless content
 
     if $task.hasClass 'add'
-      new_task =
-        complete: false
-        desc: content
-      $task = @addTask(new_task)
-      $task.data('task', new_task)
+      desc_strs = content.split('\n')
+      new_tasks = []
+      for str in desc_strs
+        new_tasks.push
+          complete: false
+          desc: str
+      $task = @addTasks(new_tasks)
       $textarea.val('')
       @_triggerEvent 'create', $task
     else
@@ -133,8 +135,7 @@ class Subtasks extends SimpleModule
   setTasks: (tasks) ->
     throw new Error "simple-subtasks: setTasks args must be Array" unless tasks instanceof Array
     @subtasks.find('.simple-subtasks').empty()
-    for t in tasks
-      @addTask(t)
+    @addTasks(tasks)
     @
 
 
@@ -145,20 +146,21 @@ class Subtasks extends SimpleModule
     tasks
 
 
-  addTask: (task) ->
-    $task = $(@_taskTpl)
-    $task.data('task', task).find('textarea').val task.desc
-    if task.complete
-      $task.addClass('complete')
-        .find("input[type='checkbox']").prop('checked', true)
-        .end().find('textarea').prop('disabled', true)
-    if @editable
-      $task.insertBefore @add_textarea
-    else
-      $task.find('textarea').prop('disabled', true)
-      $task.appendTo(@subtasks)
-    @_renderCheckbox $task.find('input[type=checkbox]')
-    $task
+  addTasks: (tasks) ->
+    for task, index in tasks
+      $task = $(@_taskTpl)
+      $task.data('task', task).find('textarea').val task.desc
+      if task.complete
+        $task.addClass('complete')
+          .find("input[type='checkbox']").prop('checked', true)
+          .end().find('textarea').prop('disabled', true)
+      if @editable
+        $task.insertBefore @add_textarea
+      else
+        $task.find('textarea').prop('disabled', true)
+        $task.appendTo(@subtasks)
+      @_renderCheckbox $task.find('input[type=checkbox]')
+      return $task if index == tasks.length - 1
 
 
   removeTask: ($task) ->
