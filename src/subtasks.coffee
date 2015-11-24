@@ -18,7 +18,7 @@ class Subtasks extends SimpleModule
   """
 
   _addTpl: """
-    <li class='add task'><i class='icon-add-task'><span>+</span></i><textarea rows='1' placeholder='添加子任务'></textarea></li>
+    <li class='add task'><i class='icon-add-task'><span>+</span></i><textarea rows='1' placeholder='添加检查项'></textarea></li>
   """
 
   _init: ->
