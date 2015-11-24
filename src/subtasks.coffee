@@ -100,30 +100,43 @@ class Subtasks extends SimpleModule
         @removeTask $task
 
 
-  _triggerEvent: (type, $task) ->
+  _triggerEvent: (type, $el) ->
     params =
       type: type
-      element: $task
-      task: $task.data('task')
+      element: $el
+    if type.indexOf('batch') == 0
+      params.tasks = $el.map((el)->
+        return el.data('task')
+      )
+    else
+      params.task = $el.data('task')
     @trigger type, params
     @trigger 'update', params
 
 
   _updateTask: ($textarea) ->
     $task = $textarea.closest('.task')
-    content = $textarea.val().trim()
-    return  unless content
+    # 过滤字符串
+    content = $textarea.val().trim().replace(/[\n]{2,}/g, '\n')
+    return unless content
 
     if $task.hasClass 'add'
       desc_strs = content.split('\n')
-      new_tasks = []
-      for str in desc_strs
-        new_tasks.push
+      if desc_strs.length == 1
+        new_tasks =
           complete: false
-          desc: str
-      $task = @addTasks(new_tasks)
+          desc: content
+        $task = @addTask(new_tasks)
+        @_triggerEvent 'create', $task
+      else
+        new_tasks = []
+        for str in desc_strs
+          new_tasks.push
+            complete: false
+            desc: str
+        $tasks = @addTasks(new_tasks)
+        @_triggerEvent 'batchCreate', $tasks
       $textarea.val('')
-      @_triggerEvent 'create', $task
     else
       task = $task.data('task')
       return if task.desc == content
@@ -145,8 +158,23 @@ class Subtasks extends SimpleModule
       tasks.push $(task).data('task')
     tasks
 
+  addTask: (task) ->
+    $task = $(@_taskTpl)
+    $task.data('task', task).find('textarea').val task.desc
+    if task.complete
+      $task.addClass('complete')
+        .find("input[type='checkbox']").prop('checked', true)
+        .end().find('textarea').prop('disabled', true)
+    if @editable
+      $task.insertBefore @add_textarea
+    else
+      $task.find('textarea').prop('disabled', true)
+      $task.appendTo(@subtasks)
+    @_renderCheckbox $task.find('input[type=checkbox]')
+    $task
 
   addTasks: (tasks) ->
+    els = []
     for task, index in tasks
       $task = $(@_taskTpl)
       $task.data('task', task).find('textarea').val task.desc
@@ -160,7 +188,8 @@ class Subtasks extends SimpleModule
         $task.find('textarea').prop('disabled', true)
         $task.appendTo(@subtasks)
       @_renderCheckbox $task.find('input[type=checkbox]')
-      return $task if index == tasks.length - 1
+      els.push($task)
+    els
 
 
   removeTask: ($task) ->
