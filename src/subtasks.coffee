@@ -7,6 +7,7 @@ class Subtasks extends SimpleModule
     animation: false
     type: 'circle' # or 'square'
     beforeRemove: null
+    createSplit: null
     editable: true
 
   _tpl: """
@@ -34,9 +35,9 @@ class Subtasks extends SimpleModule
 
   _render: ->
     @subtasks = $(@_tpl).addClass(@opts.cls)
-    @add_textarea = $(@_addTpl)
+    @addTextarea = $(@_addTpl)
     if @editable
-      @subtasks.append(@add_textarea)
+      @subtasks.append(@addTextarea)
     else
       @subtasks.addClass('unable-edit').find('textarea').prop('disabled', true)
     @subtasks.data 'subtasks', @
@@ -117,24 +118,25 @@ class Subtasks extends SimpleModule
   _updateTask: ($textarea) ->
     $task = $textarea.closest('.task')
     # 过滤字符串
-    content = $textarea.val().trim().replace(/[\n]{2,}/g, '\n')
+    content = $textarea.val().trim().replace(new RegExp("[#{@opts.createSplit}]{2,}",'g'), @opts.createSplit)
     return unless content
 
     if $task.hasClass 'add'
-      desc_strs = content.split('\n')
-      if desc_strs.length == 1
-        new_tasks =
+      descStrs = content.split(@opts.createSplit)
+      if not @opts.createSplit or descStrs.length == 1
+        newTasks =
           complete: false
           desc: content
-        $task = @addTask(new_tasks)
+        $task = @addTask(newTasks)
         @_triggerEvent 'create', $task
       else
-        new_tasks = []
-        for str in desc_strs
-          new_tasks.push
+        newTasks = []
+        for str in descStrs
+          continue if str.trim() == ''
+          newTasks.push
             complete: false
-            desc: str
-        $tasks = @addTasks(new_tasks)
+            desc: str.trim()
+        $tasks = @addTasks(newTasks)
         @_triggerEvent 'batchCreate', $tasks
       $textarea.val('')
     else
@@ -166,7 +168,7 @@ class Subtasks extends SimpleModule
         .find("input[type='checkbox']").prop('checked', true)
         .end().find('textarea').prop('disabled', true)
     if @editable
-      $task.insertBefore @add_textarea
+      $task.insertBefore @addTextarea
     else
       $task.find('textarea').prop('disabled', true)
       $task.appendTo(@subtasks)
@@ -183,7 +185,7 @@ class Subtasks extends SimpleModule
           .find("input[type='checkbox']").prop('checked', true)
           .end().find('textarea').prop('disabled', true)
       if @editable
-        $task.insertBefore @add_textarea
+        $task.insertBefore @addTextarea
       else
         $task.find('textarea').prop('disabled', true)
         $task.appendTo(@subtasks)
