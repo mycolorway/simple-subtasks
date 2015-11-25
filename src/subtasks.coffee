@@ -7,6 +7,7 @@ class Subtasks extends SimpleModule
     animation: false
     type: 'circle' # or 'square'
     beforeRemove: null
+    createSplit: null
     editable: true
 
   _tpl: """
@@ -34,9 +35,9 @@ class Subtasks extends SimpleModule
 
   _render: ->
     @subtasks = $(@_tpl).addClass(@opts.cls)
-    @add_textarea = $(@_addTpl)
+    @addTextarea = $(@_addTpl)
     if @editable
-      @subtasks.append(@add_textarea)
+      @subtasks.append(@addTextarea)
     else
       @subtasks.addClass('unable-edit').find('textarea').prop('disabled', true)
     @subtasks.data 'subtasks', @
@@ -100,28 +101,44 @@ class Subtasks extends SimpleModule
         @removeTask $task
 
 
-  _triggerEvent: (type, $task) ->
+  _triggerEvent: (type, $el) ->
     params =
       type: type
-      element: $task
-      task: $task.data('task')
+      element: $el
+    if type.indexOf('batch') == 0
+      params.tasks = $el.map((el)->
+        return el.data('task')
+      )
+    else
+      params.task = $el.data('task')
     @trigger type, params
     @trigger 'update', params
 
 
   _updateTask: ($textarea) ->
     $task = $textarea.closest('.task')
-    content = $textarea.val().trim()
-    return  unless content
+    # 过滤字符串
+    content = $textarea.val().trim().replace(new RegExp("[#{@opts.createSplit}]{2,}",'g'), @opts.createSplit)
+    return unless content
 
     if $task.hasClass 'add'
-      new_task =
-        complete: false
-        desc: content
-      $task = @addTask(new_task)
-      $task.data('task', new_task)
+      descStrs = content.split(@opts.createSplit)
+      if not @opts.createSplit or descStrs.length == 1
+        newTasks =
+          complete: false
+          desc: content
+        $task = @addTask(newTasks)
+        @_triggerEvent 'create', $task
+      else
+        newTasks = []
+        for str in descStrs
+          continue if str.trim() == ''
+          newTasks.push
+            complete: false
+            desc: str.trim()
+        $tasks = @addTasks(newTasks)
+        @_triggerEvent 'batchCreate', $tasks
       $textarea.val('')
-      @_triggerEvent 'create', $task
     else
       task = $task.data('task')
       return if task.desc == content
@@ -133,8 +150,7 @@ class Subtasks extends SimpleModule
   setTasks: (tasks) ->
     throw new Error "simple-subtasks: setTasks args must be Array" unless tasks instanceof Array
     @subtasks.find('.simple-subtasks').empty()
-    for t in tasks
-      @addTask(t)
+    @addTasks(tasks)
     @
 
 
@@ -144,7 +160,6 @@ class Subtasks extends SimpleModule
       tasks.push $(task).data('task')
     tasks
 
-
   addTask: (task) ->
     $task = $(@_taskTpl)
     $task.data('task', task).find('textarea').val task.desc
@@ -153,12 +168,30 @@ class Subtasks extends SimpleModule
         .find("input[type='checkbox']").prop('checked', true)
         .end().find('textarea').prop('disabled', true)
     if @editable
-      $task.insertBefore @add_textarea
+      $task.insertBefore @addTextarea
     else
       $task.find('textarea').prop('disabled', true)
       $task.appendTo(@subtasks)
     @_renderCheckbox $task.find('input[type=checkbox]')
     $task
+
+  addTasks: (tasks) ->
+    els = []
+    for task, index in tasks
+      $task = $(@_taskTpl)
+      $task.data('task', task).find('textarea').val task.desc
+      if task.complete
+        $task.addClass('complete')
+          .find("input[type='checkbox']").prop('checked', true)
+          .end().find('textarea').prop('disabled', true)
+      if @editable
+        $task.insertBefore @addTextarea
+      else
+        $task.find('textarea').prop('disabled', true)
+        $task.appendTo(@subtasks)
+      @_renderCheckbox $task.find('input[type=checkbox]')
+      els.push($task)
+    els
 
 
   removeTask: ($task) ->
