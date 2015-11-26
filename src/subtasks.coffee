@@ -135,7 +135,7 @@ class Subtasks extends SimpleModule
           continue if str.trim() == ''
           newTasks.push
             complete: false
-            desc: str.trim()
+            desc: str.trim().replace(@opts.createSplit, '')
         $tasks = @addTasks(newTasks)
         @_triggerEvent 'batchCreate', $tasks
       $textarea.val('')
