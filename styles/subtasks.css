@@ -1,7 +1,6 @@
 .simple-subtasks {
   font-size: 16px;
   list-style: none;
-  overflow: hidden;
 }
 .simple-subtasks .task {
   position: relative;
