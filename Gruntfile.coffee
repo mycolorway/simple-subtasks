@@ -39,6 +39,17 @@ module.exports = (grunt) ->
         tasks: 'jasmine'
 
     jasmine:
+      terminal:
+        src: ['lib/subtasks.js']
+        options:
+          specs: 'spec/subtasks-spec.js'
+          vendor: [
+            'vendor/bower/jquery/dist/jquery.min.js'
+            'vendor/bower/jasmine-jquery/lib/jasmine-jquery.js'
+            'vendor/bower/simple-module/lib/module.js'
+            'vendor/bower/simple-util/lib/util.js'
+            'vendor/bower/simple-checkbox/lib/checkbox.js'
+          ]
       test:
         src: ['lib/subtasks.js']
         options:
