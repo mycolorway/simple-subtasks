@@ -1,5 +1,5 @@
 # Simple Subtasks
-[![Circle CI](https://circleci.com/gh/mycolorway/simditor-subtasks.png?style=badge)](https://circleci.com/gh/mycolorway/simditor-subtasks)
+[![Circle CI](https://circleci.com/gh/mycolorway/simple-subtasks.svg?style=svg)](https://circleci.com/gh/mycolorway/simple-subtasks)
 
 一个基于 [Simple Module](https://github.com/mycolorway/simple-module) 的 Todo 插件
 
