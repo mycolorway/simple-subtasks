@@ -9,6 +9,7 @@
     <link media="all" rel="stylesheet" type="text/css" href="vendor/bower/simple-dialog/styles/dialog.css" />
     <link media="all" rel="stylesheet" type="text/css" href="styles/subtasks.css" />
     <script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/bower/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-util/lib/util.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-checkbox/lib/checkbox.js"></script>
@@ -95,6 +96,12 @@
 
         $evt_print = $('#evt-print');
 
+        $('.simple-subtasks').sortable({
+            scrollSensitivity: 100,
+            cursor: 'move',
+            distance: 20,
+            items: '.task:not(.add)'
+        });
 
         st.on('update', function(evt, params) {
             // console.log(st.getTasks());
