@@ -15,7 +15,7 @@ class Subtasks extends SimpleModule
   """
 
   _taskTpl: """
-    <li class='task'><input type='checkbox' /><textarea rows='1'></textarea><i class='icon-remove-task'><span>×</span></i></li>
+    <li class='task'><input type='checkbox' /><p class='content'></p><textarea rows='1'></textarea><i class='icon-remove-task'><span>×</span></i></li>
   """
 
   _addTpl: """
@@ -91,6 +91,9 @@ class Subtasks extends SimpleModule
         @_updateTask $textarea
       else
         @removeTask $textarea.closest('.task')
+      $(e.currentTarget)
+        .closest('.task')
+        .removeClass('editing')
 
     .on 'click', '.task .icon-remove-task', (e) =>
       $task = $(e.currentTarget).closest('.task')
@@ -100,6 +103,13 @@ class Subtasks extends SimpleModule
       else
         @removeTask $task
 
+    .on 'click', '.task p.content', (e)->
+      $p = $(e.currentTarget)
+      $textarea = $p.next('textarea')
+      if not $textarea.is('[disabled]')
+        $p.closest('.task')
+          .addClass('editing')
+        $textarea.focus();
 
   _triggerEvent: (type, $el) ->
     params =
@@ -117,6 +127,7 @@ class Subtasks extends SimpleModule
 
   _updateTask: ($textarea) ->
     $task = $textarea.closest('.task')
+    $p = $textarea.prev('p.content')
     # 过滤字符串
     content = $textarea.val().trim().replace(new RegExp("[#{@opts.createSplit}]{2,}",'g'), @opts.createSplit)
     return unless content
@@ -144,6 +155,7 @@ class Subtasks extends SimpleModule
       return if task.desc == content
       task.desc = content
       $task.data 'task', task
+      $p.text(content)
       @_triggerEvent 'edit', $task
 
 
@@ -162,7 +174,10 @@ class Subtasks extends SimpleModule
 
   addTask: (task) ->
     $task = $(@_taskTpl)
-    $task.data('task', task).find('textarea').val task.desc
+    $task.data('task', task)
+      .find('textarea').val task.desc
+      .end()
+      .find('p.content').text task.desc
     if task.complete
       $task.addClass('complete')
         .find("input[type='checkbox']").prop('checked', true)
@@ -179,7 +194,10 @@ class Subtasks extends SimpleModule
     els = []
     for task, index in tasks
       $task = $(@_taskTpl)
-      $task.data('task', task).find('textarea').val task.desc
+      $task.data('task', task)
+        .find('textarea').val task.desc
+        .end()
+        .find('p.content').text task.desc
       if task.complete
         $task.addClass('complete')
           .find("input[type='checkbox']").prop('checked', true)
@@ -205,6 +223,12 @@ class Subtasks extends SimpleModule
     @trigger 'remove', params
     @trigger 'update', params
 
+  sync: ->
+    params = 
+      type: 'sync'
+      element: null
+      tasks: null
+    @trigger 'update', params
 
   destroy: ->
     @subtasks.remove()
