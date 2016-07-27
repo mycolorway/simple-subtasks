@@ -1,86 +1,86 @@
 .simple-subtasks {
   font-size: 16px;
-  list-style: none;
+
+  &.unable-edit {
+    .task .icon-remove-task {
+      display: none;
+    }
+  }
 
   .task {
     position: relative;
-    width: 100%;
-    line-height: 48px;
-    border-bottom: 1px solid #E8E8E8;
+    padding-left: 36px;
+
+    &.add {
+      .task-content {
+        color: #999;
+      }
+    }
+
+    &.editing {
+      .task-content {
+        display: none;
+      }
+
+      .task-form {
+        display: block;
+      }
+    }
 
     &.complete {
-      p.content {
+      .task-content {
         text-decoration: line-through;
         color: #999;
       }
+
       textarea {
         text-decoration: line-through;
         color: #999;
       }
     }
 
-    p.content {
-      display: block;
-      padding: 15px 50px;
-      box-sizing: border-box;
-      width: 100%;
-      height: 48px;
-      line-height: 1.2;
-      outline: none;
-      border: 0;
+    .task-content {
       margin: 0;
-      z-index: 1;
-      background-color: #fff;
+      padding: 5px;
+      min-height: 26px;
+      line-height: 26px;
+      cursor: pointer;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+
+    .task-form {
+      display: none;
     }
 
     textarea {
-      display: none;
-      padding: 15px 50px;
-      box-sizing: border-box;
+      padding: 5px;
       width: 100%;
-      height: 48px;
-      line-height: 1.2;
+      height: 36px;
+      line-height: 26px;
       outline: none;
       resize: none;
       border: 0;
       z-index: 1;
       font-size: 16px;
       background-color: #fff;
+      box-sizing: border-box;
+      word-break: break-all;
+      word-wrap: break-word;
     }
 
     .icon-add-task {
       position: absolute;
       top: 0;
       left: 0;
-      width: 48px;
-      color: #9b9b9b;
+      width: 36px;
+      line-height: 36px;
+      color: #999;
       text-align: center;
     }
 
-    .icon-remove-task {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 48px;
-      height: 48px;
-      color: #9b9b9b;
-      text-align: center;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    &.add textarea {
-      display: block;
-    }
-
-    &.editing {
-      p.content {
-        display: none;
-      }
-      textarea {
-        display: block;
-      }
+    .link-remove-task {
+      float: right;
     }
   }
 
@@ -88,15 +88,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    padding: 12px;
+    padding: 9px;
     z-index: 2;
-  }
-
-  
-
-  &.unable-edit {
-    .task .icon-remove-task {
-      display: none;
-    }
   }
 }

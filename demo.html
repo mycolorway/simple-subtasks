@@ -9,7 +9,7 @@
     <link media="all" rel="stylesheet" type="text/css" href="vendor/bower/simple-dialog/styles/dialog.css" />
     <link media="all" rel="stylesheet" type="text/css" href="styles/subtasks.css" />
     <script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="vendor/bower/jquery-ui/jquery-ui.js"></script>
+    <!-- <script type="text/javascript" src="vendor/bower/jquery-ui/jquery-ui.js"></script> -->
     <script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-util/lib/util.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-checkbox/lib/checkbox.js"></script>
@@ -44,7 +44,7 @@
     }
 
     .phone-wrapper {
-        width: 300px;
+        width: 375px;
         height: 480px;
         border: 1px solid #999;
         margin: 0 auto;
@@ -74,48 +74,39 @@
             'complete': false,
             'desc': '一个没有完成的子任务'
         }, {
+            'complete': false,
+            'desc': '一个没有完成的子任务'
+        }, {
             'complete': true,
             'desc': '一个已经完成了的子任务'
         }];
         var st = simple.subtasks({
             el: $("#subtasks"),
-            size: 22,
-            animation: true,
-            beforeRemove: function(el, task, remove_task) {
-                var dialog = simple.dialog.confirm({
-                    content: "确定要删除子任务：" + task.desc + " 吗？",
-                    callback: function(e, yes) {
-                        dialog.remove();
-                        if (yes) {
-                            remove_task();
-                        }
-                    }
-                });
-            }
+            animation: true
         }).setTasks(data);
 
         $evt_print = $('#evt-print');
 
-        $('.simple-subtasks').sortable({
-            scrollSensitivity: 100,
-            cursor: 'move',
-            distance: 20,
-            items: '.task:not(.add)'
-        });
+        // $('.simple-subtasks').sortable({
+        //     scrollSensitivity: 100,
+        //     cursor: 'move',
+        //     distance: 20,
+        //     items: '.task:not(.add)'
+        // });
 
-        st.on('update', function(evt, params) {
-            // console.log(st.getTasks());
-        }).on('complete', function(evt, params) {
-            $evt_print.html('Complete task: ' + params.task.desc + '.');
-        }).on('reopen', function(evt, params) {
-            $evt_print.html('Reopen task: ' + params.task.desc + '.');
-        }).on('create', function(evt, params) {
-            $evt_print.html('Create task: ' + params.task.desc + '.');
-        }).on('edit', function(evt, params) {
-            $evt_print.html('Edit task: ' + params.task.desc + '.');
-        }).on('remove', function(evt, params) {
-            $evt_print.html('Remove task: ' + params.task.desc + '.');
-        });
+        // st.on('update', function(evt, params) {
+        //     // console.log(st.getTasks());
+        // }).on('complete', function(evt, params) {
+        //     $evt_print.html('Complete task: ' + params.task.desc + '.');
+        // }).on('reopen', function(evt, params) {
+        //     $evt_print.html('Reopen task: ' + params.task.desc + '.');
+        // }).on('create', function(evt, params) {
+        //     $evt_print.html('Create task: ' + params.task.desc + '.');
+        // }).on('edit', function(evt, params) {
+        //     $evt_print.html('Edit task: ' + params.task.desc + '.');
+        // }).on('remove', function(evt, params) {
+        //     $evt_print.html('Remove task: ' + params.task.desc + '.');
+        // });
     });
     </script>
 </body>
