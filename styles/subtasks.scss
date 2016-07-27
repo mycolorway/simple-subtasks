@@ -2,8 +2,40 @@
   font-size: 16px;
 
   &.unable-edit {
-    .task .icon-remove-task {
-      display: none;
+    .task .task-content {
+      pointer-events: none;
+    }
+  }
+
+  .progress {
+    position: relative;
+    margin: 10px 0;
+
+    .bar {
+      margin: 0 5px 0 36px;
+      height: 6px;
+      vertical-align: middle;
+      background-color: #F2F5EA;
+      border: 1px solid #88AF40;
+      border-radius: 3px;
+    }
+
+    .inner-bar {
+      width: 0;
+      height: 6px;
+      background-color: #88AF40;
+      -webkit-transition: width 250ms ease-in-out;
+      -moz-transition: width 250ms ease-in-out;
+      transition: width 250ms ease-in-out;
+    }
+
+    .count {
+      position: absolute;
+      top: -2px;
+      margin-left: 10px;
+      font-size: 12px;
+      line-height: 1;
+      color: #999;
     }
   }
 

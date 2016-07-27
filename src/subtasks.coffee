@@ -14,6 +14,15 @@ class Subtasks extends SimpleModule
     <div class="simple-subtasks"></div>
   """
 
+  _progress: """
+    <div class="progress">
+      <span class="count"></span>
+      <div class="bar">
+        <div class="inner-bar"></div>
+      </div>
+    </div>
+  """
+
   _taskTpl: """
     <div class="task">
       <input type="checkbox">
@@ -22,7 +31,7 @@ class Subtasks extends SimpleModule
         <div class="task-form">
           <textarea rows="1"></textarea>
           <div class="edit-controls">
-            <input class="btn link-submit-edit" type="submit" value="保存">
+            <a class="btn link-submit-edit" href="javascript:;">保存</a>
             <a class="btn btn-x link-cancel-edit" href="javascript:;">取消</a>
             <a href="javascript:;" class="btn btn-x link-remove-task">删除</a>
           </div>
@@ -39,7 +48,7 @@ class Subtasks extends SimpleModule
         <div class="task-form">
           <textarea rows="1" placeholder="添加检查项"></textarea>
           <div class="edit-controls">
-            <input class="btn link-submit-edit" type="submit" value="添加">
+            <a class="btn link-submit-edit" href="javascript:;">添加</a>
             <a class="btn btn-x link-cancel-edit" href="javascript:;">取消</a>
           </div>
         </div>
@@ -59,7 +68,7 @@ class Subtasks extends SimpleModule
 
 
   _render: ->
-    @subtasks = $(@_tpl).addClass(@opts.cls)
+    @subtasks = $(@_tpl).addClass(@opts.cls).append $(@_progress)
     @addTextarea = $(@_addTpl)
     if @editable
       @subtasks.append(@addTextarea)
@@ -101,17 +110,19 @@ class Subtasks extends SimpleModule
       @current_task = $textarea.closest('.task').data('task')
 
     .on 'keydown', '.task textarea', (e) =>
-      return unless e.which == 13
-      e.preventDefault()
-      $task = $(e.currentTarget).closest('.task')
-      $task.find('input[type=submit]').click()
+      if e.which == 13
+        e.preventDefault()
+        $task = $(e.currentTarget).closest('.task')
+        $task.find('.link-submit-edit').trigger 'mousedown'
+      else if e.which == 27
+        @_cancelEdit(e)
 
     .on 'blur', '.task textarea', @_cancelEdit
-    .on 'mousedown touchstart', '.task .link-cancel-edit', @_cancelEdit
-    .on 'mousedown touchstart', '.task input[type=submit]', (e) =>
+    .on 'mousedown', '.task .link-cancel-edit', @_cancelEdit
+    .on 'mousedown', '.task .link-submit-edit', (e) =>
       @_updateTask $(e.currentTarget).closest('.task')
 
-    .on 'mousedown touchstart', '.task .link-remove-task', (e) =>
+    .on 'mousedown', '.task .link-remove-task', (e) =>
       $task = $(e.currentTarget).closest('.task')
       if typeof @opts.beforeRemove is 'function'
         @opts.beforeRemove $task, $task.data('task'), =>
@@ -119,7 +130,7 @@ class Subtasks extends SimpleModule
       else
         @removeTask $task
 
-    .on 'mousedown touchstart', '.task .task-content', (e) =>
+    .on 'click', '.task .task-content', (e) =>
       $task = $(e.currentTarget).closest('.task')
       $textarea = $task.find('textarea')
       return if $textarea.is('[disabled]')
@@ -141,6 +152,7 @@ class Subtasks extends SimpleModule
     @trigger type, params
     if ['create', 'batchCreate', 'complete', 'reopen'].indexOf(type) > -1
       @trigger 'update', params
+      @_renderProgress()
 
 
   _cancelEdit: (e) ->
@@ -182,10 +194,20 @@ class Subtasks extends SimpleModule
       @_triggerEvent 'update', $task
 
 
+  _renderProgress: ->
+    $progress = @subtasks.find('.progress')
+    complete = @subtasks.find('.task.complete').length
+    all = @subtasks.find('.task').length
+    $progress.find('.count').text "#{complete}/#{all}"
+    $progress.find('.inner-bar').css
+      width: "#{ complete / all * 100 }%"
+
+
   setTasks: (tasks) ->
     throw new Error "simple-subtasks: setTasks args must be Array" unless tasks instanceof Array
     @subtasks.find('.simple-subtasks').empty()
     @addTasks(tasks)
+    @_renderProgress()
     @
 
 
