@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "simple-dialog": "1.x",
-    "jasmine-jquery": "~2.1.0"
+    "jasmine-jquery": "~2.1.0",
+    "jquery-ui": "1.x"
   }
 }

@@ -9,7 +9,7 @@
     <link media="all" rel="stylesheet" type="text/css" href="vendor/bower/simple-dialog/styles/dialog.css" />
     <link media="all" rel="stylesheet" type="text/css" href="styles/subtasks.css" />
     <script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="vendor/bower/jquery-ui/jquery-ui.js"></script> -->
+    <script type="text/javascript" src="vendor/bower/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-util/lib/util.js"></script>
     <script type="text/javascript" src="vendor/bower/simple-checkbox/lib/checkbox.js"></script>
@@ -87,26 +87,26 @@
 
         $evt_print = $('#evt-print');
 
-        // $('.simple-subtasks').sortable({
-        //     scrollSensitivity: 100,
-        //     cursor: 'move',
-        //     distance: 20,
-        //     items: '.task:not(.add)'
-        // });
+        $('.simple-subtasks').sortable({
+            scrollSensitivity: 100,
+            cursor: 'move',
+            distance: 20,
+            items: '.task:not(.add)'
+        });
 
-        // st.on('update', function(evt, params) {
-        //     // console.log(st.getTasks());
-        // }).on('complete', function(evt, params) {
-        //     $evt_print.html('Complete task: ' + params.task.desc + '.');
-        // }).on('reopen', function(evt, params) {
-        //     $evt_print.html('Reopen task: ' + params.task.desc + '.');
-        // }).on('create', function(evt, params) {
-        //     $evt_print.html('Create task: ' + params.task.desc + '.');
-        // }).on('edit', function(evt, params) {
-        //     $evt_print.html('Edit task: ' + params.task.desc + '.');
-        // }).on('remove', function(evt, params) {
-        //     $evt_print.html('Remove task: ' + params.task.desc + '.');
-        // });
+        st.on('update', function(evt, params) {
+            // console.log(st.getTasks());
+        }).on('complete', function(evt, params) {
+            $evt_print.html('Complete task: ' + params.task.desc + '.');
+        }).on('reopen', function(evt, params) {
+            $evt_print.html('Reopen task: ' + params.task.desc + '.');
+        }).on('create', function(evt, params) {
+            $evt_print.html('Create task: ' + params.task.desc + '.');
+        }).on('edit', function(evt, params) {
+            $evt_print.html('Edit task: ' + params.task.desc + '.');
+        }).on('remove', function(evt, params) {
+            $evt_print.html('Remove task: ' + params.task.desc + '.');
+        });
     });
     </script>
 </body>

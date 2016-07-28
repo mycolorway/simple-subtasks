@@ -9,6 +9,7 @@ class Subtasks extends SimpleModule
     beforeRemove: null
     createSplit: null
     editable: true
+    autolink: true
 
   _tpl: """
     <div class="simple-subtasks"></div>
@@ -138,6 +139,9 @@ class Subtasks extends SimpleModule
       $textarea.select()
       @_triggerEvent 'edit', $task
 
+    .on 'click', '.task a[target="_blank"]', (e) ->
+      e.stopPropagation()
+
 
   _triggerEvent: (type, $el) ->
     params =
@@ -190,7 +194,7 @@ class Subtasks extends SimpleModule
       return if task.desc == content
       task.desc = content
       $task.data 'task', task
-      $task.find('.task-content').text content
+      $task.find('.task-content').html @_renderLinks(content)
       @_triggerEvent 'update', $task
 
 
@@ -201,6 +205,13 @@ class Subtasks extends SimpleModule
     $progress.find('.count').text "#{complete}/#{all}"
     $progress.find('.inner-bar').css
       width: "#{ complete / all * 100 }%"
+
+
+  _renderLinks: (content) ->
+    return if @opts.autolink
+              content.autolink {target: '_blank'}
+            else
+              content
 
 
   setTasks: (tasks) ->
@@ -223,7 +234,8 @@ class Subtasks extends SimpleModule
     $task.data('task', task)
       .find('textarea').val task.desc
       .end()
-      .find('.task-content').text task.desc
+      .find('.task-content')
+      .html @_renderLinks(task.desc)
     if task.complete
       $task.addClass('complete')
         .find("input[type='checkbox']").prop('checked', true)
@@ -244,7 +256,8 @@ class Subtasks extends SimpleModule
       $task.data('task', task)
         .find('textarea').val task.desc
         .end()
-        .find('.task-content').text task.desc
+        .find('.task-content')
+        .html @_renderLinks(task.desc)
       if task.complete
         $task.addClass('complete')
           .find("input[type='checkbox']").prop('checked', true)
