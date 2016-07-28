@@ -44,7 +44,7 @@
     }
 
     .phone-wrapper {
-        width: 300px;
+        width: 375px;
         height: 480px;
         border: 1px solid #999;
         margin: 0 auto;
@@ -74,24 +74,15 @@
             'complete': false,
             'desc': '一个没有完成的子任务'
         }, {
+            'complete': false,
+            'desc': '一个没有完成的子任务'
+        }, {
             'complete': true,
             'desc': '一个已经完成了的子任务'
         }];
         var st = simple.subtasks({
             el: $("#subtasks"),
-            size: 22,
-            animation: true,
-            beforeRemove: function(el, task, remove_task) {
-                var dialog = simple.dialog.confirm({
-                    content: "确定要删除子任务：" + task.desc + " 吗？",
-                    callback: function(e, yes) {
-                        dialog.remove();
-                        if (yes) {
-                            remove_task();
-                        }
-                    }
-                });
-            }
+            animation: true
         }).setTasks(data);
 
         $evt_print = $('#evt-print');

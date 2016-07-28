@@ -77,7 +77,7 @@ describe('simple-subtasks', function() {
     expect(spyEventComplete).toHaveBeenTriggered();
     return expect(spyEventUpdate).toHaveBeenTriggered();
   });
-  it('should add new task when add task textarea trigger enter event', function() {
+  return it('should add new task when add task textarea trigger enter event', function() {
     var $add_task, evt, spyEventCreate, spyEventUpdate;
     spyEventCreate = spyOnEvent($subtasks, 'create');
     spyEventUpdate = spyOnEvent($subtasks, 'update');
@@ -89,44 +89,5 @@ describe('simple-subtasks', function() {
     expect($('.add.task textarea').val()).toBe('');
     expect(spyEventCreate).toHaveBeenTriggered();
     return expect(spyEventUpdate).toHaveBeenTriggered();
-  });
-  it('should change task desc when task textarea trigger enter event', function() {
-    var $edit_task, evt, spyEventEdit, spyEventUpdate;
-    spyEventEdit = spyOnEvent($subtasks, 'edit');
-    spyEventUpdate = spyOnEvent($subtasks, 'update');
-    $edit_task = findTaskEl($el, 'A normal sub-task');
-    evt = $.Event('keydown');
-    evt.which = 13;
-    $edit_task.find('textarea').val('edit task desc').trigger(evt);
-    expect($edit_task.find('textarea').val()).toBe('edit task desc');
-    expect(spyEventEdit).toHaveBeenTriggered();
-    return expect(spyEventUpdate).toHaveBeenTriggered();
-  });
-  it('should change task desc when blur task textarea and value is not empty', function() {
-    var $edit_task, spyEventEdit, spyEventUpdate;
-    spyEventEdit = spyOnEvent($subtasks, 'edit');
-    spyEventUpdate = spyOnEvent($subtasks, 'update');
-    $edit_task = findTaskEl($el, 'A normal sub-task');
-    $edit_task.find('textarea').val('edit task desc').trigger('blur');
-    expect($edit_task.find('textarea').val()).toBe('edit task desc');
-    expect(spyEventEdit).toHaveBeenTriggered();
-    return expect(spyEventUpdate).toHaveBeenTriggered();
-  });
-  it('should remove task when blur task textarea and value is empty', function() {
-    var $remove_task, spyEventRemove, spyEventUpdate;
-    spyEventRemove = spyOnEvent($subtasks, 'remove');
-    spyEventUpdate = spyOnEvent($subtasks, 'update');
-    $remove_task = findTaskEl($el, 'A normal sub-task');
-    $remove_task.find('textarea').val('').trigger('blur');
-    expect($el.find('.task:contains(A normal sub-task)')).not.toExist();
-    expect(spyEventRemove).toHaveBeenTriggered();
-    return expect(spyEventUpdate).toHaveBeenTriggered();
-  });
-  return it('should call func beforeRemove when click .icon-remove-task', function() {
-    var $remove_task;
-    spyOn($subtasks.opts, 'beforeRemove');
-    $remove_task = findTaskEl($el, 'A normal sub-task');
-    $remove_task.find('.icon-remove-task').trigger('click');
-    return expect($subtasks.opts.beforeRemove).toHaveBeenCalled();
   });
 });

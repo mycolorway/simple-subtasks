@@ -21,7 +21,10 @@ module.exports = (grunt) ->
           'spec/subtasks-spec.js': 'spec/subtasks-spec.coffee'
       subtasks:
         files:
-          'lib/subtasks.js': 'src/subtasks.coffee'
+          'lib/subtasks.js': [
+            'src/subtasks.coffee'
+            'src/autolink.coffee'
+          ]
 
     watch:
       styles:

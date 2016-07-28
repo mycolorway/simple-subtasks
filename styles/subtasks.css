@@ -1,14 +1,51 @@
 .simple-subtasks {
   font-size: 16px;
-  list-style: none;
+}
+.simple-subtasks.unable-edit .task .task-content {
+  pointer-events: none;
+}
+.simple-subtasks .progress {
+  position: relative;
+  margin: 10px 0;
+}
+.simple-subtasks .progress .bar {
+  margin: 0 5px 0 36px;
+  height: 6px;
+  vertical-align: middle;
+  background-color: #F2F5EA;
+  border: 1px solid #88AF40;
+  border-radius: 3px;
+}
+.simple-subtasks .progress .inner-bar {
+  width: 0;
+  height: 6px;
+  background-color: #88AF40;
+  -webkit-transition: width 250ms ease-in-out;
+  -moz-transition: width 250ms ease-in-out;
+  transition: width 250ms ease-in-out;
+}
+.simple-subtasks .progress .count {
+  position: absolute;
+  top: -2px;
+  margin-left: 10px;
+  font-size: 12px;
+  line-height: 1;
+  color: #999;
 }
 .simple-subtasks .task {
   position: relative;
-  width: 100%;
-  line-height: 48px;
-  border-bottom: 1px solid #E8E8E8;
+  padding-left: 36px;
 }
-.simple-subtasks .task.complete p.content {
+.simple-subtasks .task.add .task-content {
+  color: #999;
+}
+.simple-subtasks .task.editing .task-content {
+  display: none;
+}
+.simple-subtasks .task.editing .task-form {
+  display: block;
+}
+.simple-subtasks .task.complete .task-content {
   text-decoration: line-through;
   color: #999;
 }
@@ -16,69 +53,49 @@
   text-decoration: line-through;
   color: #999;
 }
-.simple-subtasks .task p.content {
-  display: block;
-  padding: 15px 50px;
-  box-sizing: border-box;
-  width: 100%;
-  height: 48px;
-  line-height: 1.2;
-  outline: none;
-  border: 0;
+.simple-subtasks .task .task-content {
   margin: 0;
-  z-index: 1;
-  background-color: #fff;
+  padding: 5px;
+  min-height: 26px;
+  line-height: 26px;
+  cursor: pointer;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.simple-subtasks .task .task-form {
+  display: none;
 }
 .simple-subtasks .task textarea {
-  display: none;
-  padding: 15px 50px;
-  box-sizing: border-box;
+  padding: 5px;
   width: 100%;
-  height: 48px;
-  line-height: 1.2;
+  height: 36px;
+  line-height: 26px;
   outline: none;
   resize: none;
   border: 0;
   z-index: 1;
   font-size: 16px;
   background-color: #fff;
+  box-sizing: border-box;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 .simple-subtasks .task .icon-add-task {
   position: absolute;
   top: 0;
   left: 0;
-  width: 48px;
-  color: #9b9b9b;
+  width: 36px;
+  line-height: 36px;
+  color: #999;
   text-align: center;
 }
-.simple-subtasks .task .icon-remove-task {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 48px;
-  height: 48px;
-  color: #9b9b9b;
-  text-align: center;
-  cursor: pointer;
-  z-index: 2;
-}
-.simple-subtasks .task.add textarea {
-  display: block;
-}
-.simple-subtasks .task.editing p.content {
-  display: none;
-}
-.simple-subtasks .task.editing textarea {
-  display: block;
+.simple-subtasks .task .link-remove-task {
+  float: right;
 }
 .simple-subtasks .simple-checkbox {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 12px;
+  padding: 9px;
   z-index: 2;
-}
-.simple-subtasks.unable-edit .task .icon-remove-task {
-  display: none;
 }
