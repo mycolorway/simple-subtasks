@@ -30,13 +30,13 @@ module.exports = (grunt) ->
       scripts:
         files: ['src/*.coffee', 'spec/*.coffee']
         tasks: ['coffee', 'umd']
-      # jasmine:
-      #   files: [
-      #     'styles/subtasks.css'
-      #     'lib/subtasks.js'
-      #     'specs/*.js'
-      #   ],
-      #   tasks: 'jasmine'
+      jasmine:
+        files: [
+          'styles/subtasks.css'
+          'lib/subtasks.js'
+          'specs/*.js'
+        ],
+        tasks: 'jasmine'
 
     jasmine:
       terminal:
@@ -85,7 +85,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-umd'
 
-  grunt.registerTask 'default', ['sass', 'coffee', 'umd', 'watch']
-  # grunt.registerTask 'default', ['sass', 'coffee', 'umd', 'jasmine', 'watch']
-  # grunt.registerTask 'test', ['sass', 'coffee', 'umd', 'jasmine:terminal']
+  grunt.registerTask 'default', ['sass', 'coffee', 'umd', 'jasmine', 'watch']
+  grunt.registerTask 'test', ['sass', 'coffee', 'umd', 'jasmine:terminal']
 
