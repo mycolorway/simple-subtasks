@@ -201,10 +201,10 @@ class Subtasks extends SimpleModule
   _renderProgress: ->
     $progress = @subtasks.find('.progress')
     $tasks = @subtasks.find('.task:not(.add)')
-    complete = $tasks.filter('.complete').length
-    $progress.find('.count').text "#{complete}/#{$tasks.length}"
+    count = parseInt($tasks.filter('.complete').length / $tasks.length * 100)
+    $progress.find('.count').text "#{ count }%"
     $progress.find('.inner-bar').css
-      width: "#{ complete / $tasks.length * 100 }%"
+      width: "#{ count }%"
 
 
   _renderLinks: (content) ->
