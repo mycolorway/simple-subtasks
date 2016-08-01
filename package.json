@@ -1,6 +1,6 @@
 {
   "name": "simple-subtasks",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Simple subtasks widget",
   "main": "src/subtasks.coffee",
   "scripts": {

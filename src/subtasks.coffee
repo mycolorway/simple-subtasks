@@ -202,6 +202,7 @@ class Subtasks extends SimpleModule
     $progress = @subtasks.find('.progress')
     $tasks = @subtasks.find('.task:not(.add)')
     count = parseInt($tasks.filter('.complete').length / $tasks.length * 100)
+    count = 0 if isNaN(count)
     $progress.find('.count').text "#{ count }%"
     $progress.find('.inner-bar').css
       width: "#{ count }%"
