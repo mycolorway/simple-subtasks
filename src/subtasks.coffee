@@ -194,7 +194,7 @@ class Subtasks extends SimpleModule
       return if task.desc == content
       task.desc = content
       $task.data 'task', task
-      $task.find('.task-content').html @_renderLinks(content)
+      @_renderLinks $task.find('.task-content'), content
       @_triggerEvent 'update', $task
 
 
@@ -208,11 +208,11 @@ class Subtasks extends SimpleModule
       width: "#{ count }%"
 
 
-  _renderLinks: (content) ->
+  _renderLinks: ($content, content) ->
     return if @opts.autolink
-              content.autolink {target: '_blank'}
+              $content.html content.autolink({target: '_blank'})
             else
-              content
+              $content.text content
 
 
   setTasks: (tasks) ->
@@ -232,11 +232,8 @@ class Subtasks extends SimpleModule
 
   addTask: (task) ->
     $task = $(@_taskTpl)
-    $task.data('task', task)
-      .find('textarea').val task.desc
-      .end()
-      .find('.task-content')
-      .html @_renderLinks(task.desc)
+    $task.data('task', task).find('textarea').val task.desc
+    @_renderLinks $task.find('.task-content'), task.desc
     if task.complete
       $task.addClass('complete')
         .find("input[type='checkbox']").prop('checked', true)
@@ -254,11 +251,8 @@ class Subtasks extends SimpleModule
     els = []
     for task, index in tasks
       $task = $(@_taskTpl)
-      $task.data('task', task)
-        .find('textarea').val task.desc
-        .end()
-        .find('.task-content')
-        .html @_renderLinks(task.desc)
+      $task.data('task', task).find('textarea').val task.desc
+      @_renderLinks $task.find('.task-content'), task.desc
       if task.complete
         $task.addClass('complete')
           .find("input[type='checkbox']").prop('checked', true)
