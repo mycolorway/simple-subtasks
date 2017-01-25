@@ -118,7 +118,6 @@ class Subtasks extends SimpleModule
       else if e.which == 27
         @_cancelEdit(e)
 
-    .on 'blur', '.task textarea', @_cancelEdit
     .on 'mousedown', '.task .link-cancel-edit', @_cancelEdit
     .on 'mousedown', '.task .link-submit-edit', (e) =>
       @_updateTask $(e.currentTarget).closest('.task')
